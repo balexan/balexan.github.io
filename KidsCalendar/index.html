@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script src="https://cdn.firebase.com/js/client/2.2.0/firebase.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <style>
+        .la {
+            font-family: 'Poiret One';
+            font-size: 14px;
+            overflow: hidden;
+            color: #black;
+            background-color: E0E4CC;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .m {
+            float: left;
+            overflow: hidden;
+            padding: 10px;
+            width: 210px;
+        }
+        .mo {
+            font-weight: bold;
+            font-size: 18px;
+            padding: 5px;
+        }
+        .l {
+            float: left;
+            min-width: 28px;
+            min-height: 28px;
+            line-height: 28px;
+            margin: 1px;
+            text-align: center;
+            border-radius: 28px;
+            cursor: pointer;
+        }
+        .b {
+          background-color: #69D2E7;
+        }
+        .r {
+          background-color: #FA6900;
+        }
+    </style>
+</head>
+<script>
+    months = ["", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    year = 2015;
+    fb = new Firebase("https://calender.firebaseio.com/kids/"+year);
+  $(function() {
+        m = 0;
+        for (l = 0; l < 3; l++) {
+            m3= $("<div class='la'></div>");
+            m3.appendTo('#c');
+            for (k = 0; k < 4; k++) {
+                m++;
+                m3.append("<div class='m' id='m" + m + "'></div>");
+                $('#m' + m).append("<div class='mo'>" + months[m] + "</div>");
+                var dayofweek = ((new Date(year, m - 1, 1)).getDay() + 6) % 7;
+                for (d = 0; d < dayofweek; d++) {
+                    $('#m' + m).append("<a class='l'></a>");
+                }
+                for (d = 1; d < (new Date(year, m, 0)).getDate() + 1; d++) {
+                    dd = $("<a id='"+m+"_"+d+"' class='l'>" + d + "</a>");
+                    dd.appendTo('#m' + m);
+                }
+            }
+        }
+        fb.on("child_added", function(snapshot) {
+          $('#'+snapshot.key()).toggleClass(snapshot.val(),true);
+        });
+        fb.on("child_changed", function(snapshot) {
+          $('#'+snapshot.key()).toggleClass('r',false);
+          $('#'+snapshot.key()).toggleClass('b',false);
+          $('#'+snapshot.key()).toggleClass(snapshot.val(),true);
+        });
+        fb.on("child_removed", function(snapshot) {
+          $('#'+snapshot.key()).toggleClass('r',false);
+          $('#'+snapshot.key()).toggleClass('b',false);
+        });
+        $('.l').click(function(e){
+          if ($(e.target).hasClass('b')){
+            fb.child(e.target.id).set("r");
+          } else if ($(e.target).hasClass('r')){
+            fb.child(e.target.id).remove();
+          } else {
+            fb.child(e.target.id).set("b");
+          }
+        })
+    });
+</script>
+
+<body>
+  <div id="c"></div>
+</body>
+
+</html>
