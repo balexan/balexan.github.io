@@ -1,37 +1,6 @@
-Skip welcome & menu and move to editor
-Close welcome panelWelcome to JS Bin
-New bin
-Open bin...
- 
-Textarea editor mode
-JS Bin features
-Getting started
-Keyboard Shortcuts
-Exporting/importing gist
- 
-Pro features
-Private bins
-Dropbox backup
-Vanity URLs
-Upgrade to pro now
- 
-Blog
-Asset uploads & oembed
-Help
-How can I embed JS Bin?
-Getting started
- 
-Recently on Twitter
-“Additional linters for HTML, CSS & CoffeeScript, changing output permission for anon users & SSL for pro users!” — @js_bin
- 
-“Everyone should learn how to program a computer because it teaches you how to think” —
-Steve Jobs
-File Add library Share HTMLCSSJavaScriptConsoleOutput  Account Blog Help
-HTMLSaved
-
 <!DOCTYPE html>
 <html>
-​
+
 <head>
     <meta charset="utf-8">
     <title>JS Bin</title>
@@ -94,6 +63,44 @@ HTMLSaved
             m3.appendTo('#c');
             for (k = 0; k < 4; k++) {
                 m++;
-Bin info
-5 minutes ago
--->
+                m3.append("<div class='m' id='m" + m + "'></div>");
+                $('#m' + m).append("<div class='mo'>" + months[m] + "</div>");
+                var dayofweek = ((new Date(year, m - 1, 1)).getDay() + 6) % 7;
+                for (d = 0; d < dayofweek; d++) {
+                    $('#m' + m).append("<a class='l'></a>");
+                }
+                for (d = 1; d < (new Date(year, m, 0)).getDate() + 1; d++) {
+                    dd = $("<a id='"+m+"_"+d+"' class='l'>" + d + "</a>");
+                    dd.appendTo('#m' + m);
+                }
+            }
+        }
+        fb.on("child_added", function(snapshot) {
+          $('#'+snapshot.key()).toggleClass(snapshot.val(),true);
+        });
+        fb.on("child_changed", function(snapshot) {
+          $('#'+snapshot.key()).toggleClass('r',false);
+          $('#'+snapshot.key()).toggleClass('b',false);
+          $('#'+snapshot.key()).toggleClass(snapshot.val(),true);
+        });
+        fb.on("child_removed", function(snapshot) {
+          $('#'+snapshot.key()).toggleClass('r',false);
+          $('#'+snapshot.key()).toggleClass('b',false);
+        });
+        $('.l').click(function(e){
+          if ($(e.target).hasClass('b')){
+            fb.child(e.target.id).set("r");
+          } else if ($(e.target).hasClass('r')){
+            fb.child(e.target.id).remove();
+          } else {
+            fb.child(e.target.id).set("b");
+          }
+        })
+    });
+</script>
+
+<body>
+  <div id="c"></div>
+</body>
+
+</html>
