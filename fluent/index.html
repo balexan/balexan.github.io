@@ -9,10 +9,16 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>	
 
 <style>
-body{
+	
+html, body {
+  "-moz-transform":"scale(1)",
+  "-webkit-transform":"scale(1)",
+  "-o-transform":"scale(1)",
+  "-ms-transform":"scale(1)"	
+  overflow: hidden;
 }
-
-	.x{
+	
+.x{
 	position: absolute;
 	  left: 50%;
 		top: 50%;
@@ -39,10 +45,44 @@ body{
 	
 	.a{
 		padding: 5px;
-		font-size: 24px;
+		font-size: 30px;
 	}
 	.b{
+		font-weight: bold;
+		padding: 2px;
+		font-size: 15px;
 	}
+	.c{
+	}
+	.d{
+		position: relative;
+		height: 100px;
+	}
+	.e{
+		position: absolute;
+		top: 50;
+	}
+	.f{
+		position: absolute;
+		top: 50;
+		right: 0;
+	}
+	.g{
+		position: absolute;
+		top: 50;
+		left: 80;
+	}
+
+	.f::before {
+    content: "\1F4E2";
+    font-weight: normal;
+    text-decoration: inherit;
+    font-size: 35px;
+		padding: 10px;
+}
+	
+	
+	
 	
 </style>	
 
@@ -52,13 +92,9 @@ body{
 var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
 
 	$(function() {	
-		$(".imageHeader").on("click",function(){
+		$(".g").on("click",function(){
 		  f.set(100);
 		});	
-	});
-	
-	$("body").on("drag",function(e){
-		e.preventDefault();
 	});
 	
 </script>
@@ -72,7 +108,12 @@ var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
 </header>
 <div class="a">Sarah Marks</div>
 <div class="b">Strategic Projects Manager</div>
+<div class="c">+1 (359) 3955 589</div>
+<div class="d">
+	<div class="e"><img width="50px" src="http://technology.ku.edu/sites/technology.ku.edu/files/images/general/Training/Skype_2015/icon-hangup.png"></div>
+	<div class="f"></div>
+	<div class="g"><img width="50px" src="https://s.yimg.com/oo/cms/products/site/assets/images/svg/icon-home-extend-reach_36f095219.svg"></div>
 </div>
-</header>	
+</div>
 </body>
 </html>
