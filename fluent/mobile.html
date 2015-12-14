@@ -33,27 +33,31 @@ html, body {
 		color: white;
 	}
 	
-.imageHeader{
-    width: 200px;
-    height: 200px;
+.h{
+    width: 300px;
+    height: 300px;
+		left: 180px;
     overflow: hidden;
 	border-radius: 200px;
+	position: relative;
 }
 
-.imageHeader .siteLogo{
-    margin: -50px -600px;
+.i{
+	position: absolute;
+		left: -400;
 }	
 	
 	.a{
 		padding: 5px;
-		font-size: 30px;
+		font-size: 50px;
 	}
 	.b{
 		font-weight: bold;
 		padding: 2px;
-		font-size: 15px;
+		font-size: 30px;
 	}
 	.c{
+		font-size: 28px;
 	}
 	.d{
 		position: relative;
@@ -103,8 +107,8 @@ var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
 <body class='sapUiBody'>
 <div class="x">
 		
-<header class="imageHeader">
-  <img class="siteLogo" draggable="false" src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" width="800px" />
+<header class="h">
+  <img class="i" draggable="false" src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" />
 </header>
 <div class="a">Sarah Marks</div>
 <div class="b">Strategic Projects Manager</div>
