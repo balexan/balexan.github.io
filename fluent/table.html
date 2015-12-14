@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta charset="utf-8">
+
+	<title>Fluent Demo</title>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>	
+	
+
+<style>
+body{
+	background-image: url("https://cloud.githubusercontent.com/assets/6545873/11775680/27442ac2-a241-11e5-8161-bc4d763360e7.JPG");
+	background-size: cover;
+}
+
+.imageHeader{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+	border-radius: 200px;
+	position: absolute;
+	left: 2000px;
+	top: 200px;
+	-webkit-transition: left 2s; /* Safari */
+    transition: left 2s;
+}
+
+.imageHeader .siteLogo{
+    margin: -240px -180px;
+	
+}	
+	
+</style>	
+
+	
+	
+<script>
+var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
+f.set(1000);
+f.on("value", function(snapshot){
+	$('.imageHeader').css('left',snapshot.val());
+});
+	
+</script>
+	
+</head>
+<body class='sapUiBody'>
+<header class="imageHeader">
+  <img src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" width="400px" class="siteLogo" />
+</header>	
+</body>
+</html>
