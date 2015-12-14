@@ -1,0 +1,117 @@
+<html><head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<meta charset="utf-8">
+
+	<title>Fluent Demo</title>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>	
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>	
+
+<style>
+	
+html, body {
+  "-moz-transform":"scale(1)",
+  "-webkit-transform":"scale(1)",
+  "-o-transform":"scale(1)",
+  "-ms-transform":"scale(1)"	
+  overflow: hidden;
+		background-color: black;
+}
+	
+	
+.x{
+	position: absolute;
+	  left: 10px;
+		top: 10px;
+		text-align: center;
+		font-family: 'Open Sans';
+		padding: 30px;
+		border-radius: 50px;
+	   background-color: #000;
+		color: white;
+	}
+	
+.imageHeader{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+	border-radius: 200px;
+}
+
+.imageHeader .siteLogo{
+    margin: -50px -600px;
+}	
+	
+	.a{
+		padding: 5px;
+		font-size: 30px;
+	}
+	.b{
+		font-weight: bold;
+		padding: 2px;
+		font-size: 15px;
+	}
+	.c{
+	}
+	.d{
+		position: relative;
+	}
+	.e{
+		position: absolute;
+		top: 50;
+	}
+	.f{
+		position: absolute;
+		top: 50;
+		right: 0;
+	}
+	.g{
+		position: absolute;
+		top: 50;
+		left: 80;
+	}
+
+	.f::before {
+    content: "\1F4E2";
+    font-weight: normal;
+    text-decoration: inherit;
+    font-size: 35px;
+		padding: 10px;
+}
+	
+	
+	
+	
+</style>	
+
+	
+	
+<script>
+var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
+
+	$(function() {	
+		$(".g").on("click",function(){
+		  f.set(100);
+		});	
+	});
+	
+</script>
+	
+</head>
+<body class='sapUiBody'>
+<div class="x">
+		
+<header class="imageHeader">
+  <img class="siteLogo" draggable="false" src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" width="800px" />
+</header>
+<div class="a">Sarah Marks</div>
+<div class="b">Strategic Projects Manager</div>
+<div class="c">+1 (359) 3955 589</div>
+<div class="d">
+	<img src="https://cloud.githubusercontent.com/assets/6545873/11786512/51230106-a287-11e5-9d3d-38c51f715705.png"></div>
+</div>
+</div>
+</body>
+</html>
