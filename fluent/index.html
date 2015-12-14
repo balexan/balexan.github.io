@@ -6,28 +6,43 @@
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>	
-	
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>	
 
 <style>
 body{
 }
 
-.imageHeader{
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-	border-radius: 200px;
+	.x{
 	position: absolute;
 	  left: 50%;
 		top: 50%;
 	  margin-left: -100px;
 		margin-top: -100px;
+		text-align: center;
+		font-family: 'Open Sans';
+		padding: 30px;
+		border-radius: 50px;
+	   background-color: #000;
+		color: white;
+	}
+	
+.imageHeader{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+	border-radius: 200px;
 }
 
 .imageHeader .siteLogo{
-    margin: -20px -370px;
-	
+    margin: -50px -600px;
 }	
+	
+	.a{
+		padding: 5px;
+		font-size: 24px;
+	}
+	.b{
+	}
 	
 </style>	
 
@@ -46,8 +61,14 @@ var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
 	
 </head>
 <body class='sapUiBody'>
+<div class="x">
+		
 <header class="imageHeader">
-  <img draggable="false" src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" width="800px" class="siteLogo" />
+  <img class="siteLogo" draggable="false" src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" width="800px" />
+</header>
+<div class="a">Sarah Marks</div>
+<div class="b">Strategic Projects Manager</div>
+</div>
 </header>	
 </body>
 </html>
