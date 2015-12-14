@@ -7,6 +7,7 @@
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>	
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>	
 	
 
 <style>
@@ -20,17 +21,38 @@ body{
     height: 100px;
     overflow: hidden;
 	border-radius: 200px;
-	position: absolute;
-	left: -500px;
-	top: 200px;
-	-webkit-transition: left 2s; /* Safari */
-    transition: left 2s;
+		margin-left: 40px;
 }
 
 .imageHeader .siteLogo{
     margin: -240px -180px;
 	
 }	
+
+	
+.x{
+	position: absolute;
+	  left: -250px;
+		top: 10px;
+		text-align: center;
+		font-family: 'Open Sans';
+		padding: 30px;
+		border-radius: 50px;
+	   background-color: #000;
+		color: white;
+	-webkit-transition: left 2s; /* Safari */
+    transition: left 2s;
+	}
+
+	.a{
+		padding: 5px;
+		font-size: 30px;
+	}
+	.b{
+		font-weight: bold;
+		padding: 2px;
+		font-size: 15px;
+	}
 	
 </style>	
 
@@ -40,15 +62,21 @@ body{
 var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
 f.set(1000);
 f.on("value", function(snapshot){
-	$('.imageHeader').css('left',snapshot.val());
+	$('.x').css('left',snapshot.val());
 });
 	
 </script>
 	
 </head>
 <body class='sapUiBody'>
+<div class="x">
 <header class="imageHeader">
   <img src="https://cloud.githubusercontent.com/assets/6545873/11775700/4c724b12-a241-11e5-8c0b-dfe4bc677aa6.jpg" width="400px" class="siteLogo" />
 </header>	
+<div class="a">Sarah Marks</div>
+<div class="b">Strategic Projects Manager</div>
+<div class="c">+1 (359) 3955 589</div>
+</div>
+
 </body>
 </html>
