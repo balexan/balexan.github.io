@@ -96,7 +96,6 @@ html, body {
 	
 <script>
 var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
-var done = false
 var stratx = 0;
 var starty = 0;
 	$(function() {	
@@ -114,7 +113,7 @@ var starty = 0;
    			var dy = parseInt(touchobj.clientY) - starty;
    			
    			var dist = Math.sqrt(dx*dx+dy*dy);
-			if (dist > 500 && !done){
+			if (dist > 500){
 				$('.a').html("Sent to table!");
  		  		f.set(100);
  		  		done = true;
