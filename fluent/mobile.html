@@ -114,8 +114,8 @@ var starty = 0;
    			var dy = parseInt(touchobj.clientY) - starty;
    			
    			var dist = Math.sqrt(dx*dx+dy*dy);
-			$('.a').html(dist);
-			if (dist > 10 && !done){
+			if (dist > 500 && !done){
+				$('.a').html("Sent to table!");
  		  		f.set(100);
  		  		done = true;
 			}
