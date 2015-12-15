@@ -96,11 +96,29 @@ html, body {
 	
 <script>
 var f = new Firebase("https://sapmindpad.firebaseio.com/fluentdemo");
-
+var done = false
+var stratx = 0;
+var starty = 0;
 	$(function() {	
-		$("body").on("swipe",function(){
-		  f.set(100);
-		});	
+		document.ontouchstart = function(e){ 
+			var touchobj = e.changedTouches[0]
+ 			startx = parseInt(touchobj.clientX);
+ 			starty = parseInt(touchobj.clientY);			
+			e.preventDefault(); 
+		}
+
+		document.ontouchmove = function(e){ 
+   			var touchobj = e.changedTouches[0] // reference first touch point for this event
+   			var dx = parseInt(touchobj.clientX) - startx;
+   			var dy = parseInt(touchobj.clientY) - starty;
+   			
+   			var dist = Math.sqrt(dx*dx+dy*dy);
+
+			if (dist > 10 && !done){
+ 		  		f.set(100);
+ 		  		done = true;
+			}
+		}
 	});
 	
 </script>
