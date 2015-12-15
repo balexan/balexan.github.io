@@ -107,7 +107,8 @@ var starty = 0;
 			e.preventDefault(); 
 		}
 
-		document.ontouchmove = function(e){ 
+		document.ontouchmove = function(e){
+			e.preventDefault();
    			var touchobj = e.changedTouches[0] // reference first touch point for this event
    			var dx = parseInt(touchobj.clientX) - startx;
    			var dy = parseInt(touchobj.clientY) - starty;
