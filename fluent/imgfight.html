@@ -39,7 +39,7 @@ $(function () {
         fb.on("child_changed", function(snap){
             $('#img'+snap.key()).css('background-image', 'url("'+snap.val()+'")');
         });
-    });
+    };
 
     var name = location.href.substring(location.href.indexOf("?")+1);
     if (name){
