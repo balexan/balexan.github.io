@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+
+<script>
+$(function () {
+    
+    var fb = null;
+    var dialog = document.querySelector('dialog');    
+    dialog.showModal();    
+    $('#go').click(function() {
+        fb = new Firebase("https://imagefight.firebaseio.com/content/"+$('#name').val());
+        fb.on("child_added", function(snap){
+            $('#img'+snap.key()).css('background-image', 'url("'+snap.val()+'")');
+        });
+        fb.on("child_changed", function(snap){
+            $('#img'+snap.key()).css('background-image', 'url("'+snap.val()+'")');
+        });
+        dialog.close();
+    });
+    for (i=0; i!=20;i++) {
+        $("#grid").append('<div id="img'+i+'" class="mdl-cell demo-card-square mdl-card mdl-shadow--2dp"><input id="file'+i+'" style="display: none" type="file"><label for="file'+i+'" class="bleft mdl-button mdl-button--fab mdl-js-button"><i class="material-icons">add</i></label><button  class="bright mdl-button mdl-js-button mdl-button--fab  mdl-button--accent""><i class="material-icons">airplay</i></button></div>');
+    }
+    $(":file").change(function (e) {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e2) {
+                fb.child(this.target.id.substring("file".length)).set(e2.target.result);
+            }.bind(e);
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+    $('.bright').click(function(e){
+        fb2 = new Firebase("https://imagefight.firebaseio.com/now");
+        if($(e.target).parent().attr("id")) {
+            fb2.set($('#name').val()+'/'+$(e.target).parent().attr("id").substring("img".length));
+        } else {
+            fb2.set($('#name').val()+'/'+$(e.target).parent().parent().attr("id").substring("img".length));
+       } 
+    });
+});
+
+</script>
+</head>
+
+<style>
+.demo-card-square.mdl-card {
+  width: 200px;
+  height: 200px;
+  background-size:cover
+}
+    .bleft {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .bright{
+        position: absolute;
+        top: 10px;
+        right: 10px;        
+    }
+</style>
+    
+<body>
+<form action="#">
+</form>
+<div id="grid" class="mdl-grid">
+</div>
+ <dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Welcome</h4>
+    <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="name">
+            <label class="mdl-textfield__label" for="sample1">Enter a unique name</label>
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" id="go" class="mdl-button">Go</button>
+    </div>
+  </dialog>    
+</body>
+</html>
