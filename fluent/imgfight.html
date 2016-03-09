@@ -42,7 +42,7 @@ $(function () {
     };
 
     var name = location.href.substring(location.href.indexOf("?")+1);
-    if (name){
+    if (location.href.indexOf("?") > -1 && !!name){
         $('#login').fadeOut();
         continueAfterLogin(name);
     } else {
