@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+
+<script>
+
+$(function () {
+    var ic = [];
+    fb = new Firebase("https://imagefight.firebaseio.com");
+    var updateImages = function(all,user){
+        for (var i=0;i<all.length;i++) {
+                ic[user+'/'+i] = all[i];
+        }
+    };
+    fb.child("content").on("child_added", function(snap){
+        updateImages(snap.val(),snap.key());
+    });
+    fb.child("content").on("child_changed", function(snap){
+        updateImages(snap.val(),snap.key());
+    });
+    fb.child("now").on("value",function(snap) {
+       $("#i").attr("src",ic[snap.val()]);
+    });
+
+});
+
+</script>
+</head>
+
+<style>
+</style>
+    
+<body>
+<img id="i" width="100%" height="100%">
+</body>
+</html>
