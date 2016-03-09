@@ -12,6 +12,9 @@ $(function () {
     
     var fb = null;
     var dialog = document.querySelector('dialog');    
+    if (! dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+    }
     dialog.showModal();    
     $('#go').click(function() {
         fb = new Firebase("https://imagefight.firebaseio.com/content/"+$('#name').val());
