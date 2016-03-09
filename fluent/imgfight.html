@@ -10,11 +10,8 @@
 
 <script>
 $(function () {
-    
-    $('#go').click(function() {
-        $('#login').fadeOut();
-        
-        fb = new Firebase("https://imagefight.firebaseio.com/content/"+$('#name').val());
+    var continueAfterLogin = function (user) {
+        fb = new Firebase("https://imagefight.firebaseio.com/content/"+user);
         for (i=0; i!=20;i++) {
             $("#grid").append('<div id="img'+i+'" class="mdl-cell demo-card-square mdl-card mdl-shadow--2dp"><input id="file'+i+'" style="display: none" type="file"><label for="file'+i+'" class="bleft mdl-button mdl-button--fab mdl-js-button"><i class="material-icons">add</i></label><button  class="bright mdl-button mdl-js-button mdl-button--fab  mdl-button--accent""><i class="material-icons">airplay</i></button></div>');
         }
@@ -30,9 +27,9 @@ $(function () {
         $('.bright').click(function(e){
             fb2 = new Firebase("https://imagefight.firebaseio.com/now");
             if($(e.target).parent().attr("id")) {
-                fb2.set($('#name').val()+'/'+$(e.target).parent().attr("id").substring("img".length));
+                fb2.set(user+'/'+$(e.target).parent().attr("id").substring("img".length));
             } else {
-                fb2.set($('#name').val()+'/'+$(e.target).parent().parent().attr("id").substring("img".length));
+                fb2.set(user+'/'+$(e.target).parent().parent().attr("id").substring("img".length));
            } 
         });
         
@@ -43,6 +40,18 @@ $(function () {
             $('#img'+snap.key()).css('background-image', 'url("'+snap.val()+'")');
         });
     });
+
+    var name = location.href.substring(location.href.indexOf("?")+1);
+    if (name){
+        $('#login').fadeOut();
+        continueAfterLogin(name);
+    } else {
+        $('#go').click(function() {
+            $('#login').fadeOut();
+            continueAfterLogin($('#name').val());
+        }
+    }
+    
 });
 
 </script>
