@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<body>
+<script>
+  $(function() {
+    $("#door1").click(function(){
+      $("#door1").addClass("open");
+      $("#vid")[0].src += "&autoplay=1";
+      $("#vid")
+          .delay(2000).queue(function (next) { 
+             $(this).css('z-index',4)
+              $(this).animate({
+                  width: "700px",
+                  height: "700px"
+               }, 1000); 
+              next();
+           })
+       })
+  });
+    
+  </script>
+    <style>
+        #door1{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 200px;
+            background-image: url("http://www.allround-pc.com/wp-content/uploads/2013/11/apc_xmasdays_1.jpg");
+            font-size: 80px;
+        }
+        #door2{
+            position: absolute;
+            left: 200px;
+            top: 0;
+            width: 200px;
+            height: 200px;
+            background-image: url("http://www.allround-pc.com/wp-content/uploads/2013/11/apc_xmasdays_2.jpg");
+        }
+
+     .open
+        {
+            transform: rotateY(-90deg);
+            transform-origin: 0px;
+            transition: 2s linear;
+        }    
+        #vid{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+    </style>
+<iframe id="vid" width="200" height="200"   
+src="https://www.youtube.com/embed/TnDgS4XCqfQ?rel=0&amp;controls=0&amp;showinfo=0" 
+frameborder="0" allowfullscreen></iframe>
+    <div id="door1"></div>
+    <div id="door2"></div>
+  
+</body>
+</html>
