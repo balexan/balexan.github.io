@@ -10,15 +10,15 @@
 <body>
 <script>
   $(function() {
-    var songs=[
-      'ARQckpQPGqE' //1
+    var songs=['', //0
+      'ARQckpQPGqE', //1
+      'TnDgS4XCqfQ' //2         
     ]
     for (i=1;i<25;i++){
-        $("body").append($('<div class="door" id="d'+i+'" style="background-image: url(\'apc_xmasdays_'+i+'.jpg\')">'+
-
+        $("body").append($('<div class="door'+((new Date().getDate() >=i) ? " point":"") + '" id="d'+i+'" style="background-image: url(\'apc_xmasdays_'+i+'.jpg\')">'+
         '</div>'));
     }
-    $(".door").click(function(evt){
+    $(".point").click(function(evt){
       var doornr=evt.target.id.slice(1);
       var vid= $('<iframe class="vid" width="200" height="200" src="https://www.youtube.com/embed/'+songs[doornr]+'?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>');
       $("body").append(vid);
@@ -45,13 +45,15 @@
             height: 200px;
             float:left;
         }
-
      .open
         {
             transform: rotateY(-90deg);
             transform-origin: 0px;
             transition: 2s linear;
-        }    
+        }
+        .point{
+            cursor: pointer;
+        }
         .vid{
             position: absolute;
             z-index: -1;
