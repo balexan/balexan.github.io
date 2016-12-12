@@ -12,6 +12,7 @@
 <body>
   <img class="noshow" src="apc_xmasdays_7.jpg">
 <script>
+  var rand = [5, 23, 17, 22, 11, 10, 24, 14, 21, 3, 15, 7, 16, 2, 4, 12, 20, 6, 1, 18, 19, 9, 8, 13]; 
   $(function() {
     var songs=['', //0
       'ARQckpQPGqE', //1
@@ -29,7 +30,7 @@
               
     ]
     for (i=1;i<25;i++){
-        $("body").append($('<div class="door'+((new Date().getDate() >=i) ? " point":"") + '" id="d'+i+'" style="background-image: url(\'apc_xmasdays_'+i+'.jpg\')">'+
+        $("body").append($('<div class="door'+((new Date().getDate() >=rand[i]) ? " point":"") + '" id="d'+rand[i]+'" style="background-image: url(\'apc_xmasdays_'+rand[i]+'.jpg\')">'+
         '</div>'));
     }
     $(".point").click(function(evt){
