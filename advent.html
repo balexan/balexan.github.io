@@ -49,8 +49,8 @@
       vid.delay(2000).queue(function (next) { 
              $(this).css('z-index',4)
               $(this).animate({
-                  top: body.scrollTop || 0,
-                  left: body.scrollLeft || 0,
+                  top: document.body.scrollTop || 0,
+                  left: document.body.scrollLeft || 0,
                   width: $(window).width()+"px",
                   height: $(window).height()+"px"
                }, 1000); 
