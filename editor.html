@@ -9,7 +9,11 @@
 <script>
 t=80;
 initial = true;
-			
+
+ready(function() {
+	setCaretToPos(document.getElementById("t"),document.getElementById("t").value.length);
+});	
+	
 function k() {
 	t=50.0;
 	if (initial) {
@@ -18,7 +22,6 @@ function k() {
 	}
 	document.getElementById("t").style.opacity = 1.0;
 }
-
 setInterval(function() {
 	t = t-1.0;
 	if (t<40 && t>=0) {
@@ -28,9 +31,35 @@ setInterval(function() {
 		document.getElementById("t").value="";
 		document.getElementById("t").style.opacity = 1.0;
 	}
-		
+	
 },100);
+	
+function setSelectionRange(input, selectionStart, selectionEnd) {
+  if (input.setSelectionRange) {
+    input.focus();
+    input.setSelectionRange(selectionStart, selectionEnd);
+  }
+  else if (input.createTextRange) {
+    var range = input.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', selectionEnd);
+    range.moveStart('character', selectionStart);
+    range.select();
+  }
+}
 
+function setCaretToPos (input, pos) {
+  setSelectionRange(input, pos, pos);
+}	
+
+function ready(fn) {
+  if (document.readyState != 'loading'){
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}	
+	
 		</script>
 <style>
 textarea:hover, 
@@ -69,6 +98,6 @@ label:focus,
 </style>
 	</head>
 	<body id='content'>
-		<Textarea autofocus onkeypress="k()" id="t">Keep writing!&#13;&#10; &#13;&#10;If you don't write anything for 5 seconds, all text is gone.</Textarea>
+		<Textarea autofocus onkeypress="k()" id="t">Keep writing!&#13;&#10; &#13;&#10;If you don't write anything for 5 seconds, &#13;&#10;all text is gone.&#13;&#10;&#13;&#10;</Textarea>
 	</body>
 </html>
