@@ -8,16 +8,21 @@
 
 <script>
 t=80;
+initial = true;
 			
 function k() {
-	t=80.0;
+	t=50.0;
+	if (initial) {
+		initial=false;
+		document.getElementById("t").value="";
+	}
 	document.getElementById("t").style.opacity = 1.0;
 }
 
 setInterval(function() {
 	t = t-1.0;
-	if (t<60 && t>=0) {
-		document.getElementById("t").style.opacity = t/60;
+	if (t<40 && t>=0) {
+		document.getElementById("t").style.opacity = t/40;
 	}
 	if (t<=0){
 		document.getElementById("t").value="";
@@ -63,6 +68,6 @@ label:focus,
 </style>
 	</head>
 	<body id='content'>
-		<Textarea autofocus onkeypress="k()" id="t">Keep writing! &#13;&#10;If you don't write anything for 5 seconds, all text is gone.</Textarea>
+		<Textarea autofocus onkeypress="k()" id="t">Keep writing!&#13;&#10; &#13;&#10;If you don't write anything for 5 seconds, all text is gone.</Textarea>
 	</body>
 </html>
