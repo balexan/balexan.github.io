@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Just a Button</title>
+		
+		<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+<link href='https://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+		
+		<script>
+$(function() {
+$.ajax({
+  url: "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=3e67a937942aa45ac19a80eb24399897&photoset_id=72157635141448872&user_id=52205738@N00&per_page=30&format=json&nojsoncallback=1"
+}).done(function(data) { 
+	z = 10000;
+  data.photoset.photo.forEach(function(p){
+	  z=z-1;
+	  img = $("<div class='d'><img class='i' src='http://farm"+p.farm+".staticflickr.com/"+p.server+"/"+p.id+"_"+p.secret+"_z.jpg'><p class='t'>"+p.title+"</p></div>");
+    img.css('top',Math.floor(Math.random()*30+100)+"px");
+    img.css('left',Math.floor(Math.random()*30+100)+"px");
+    img.css('-webkit-transform','rotate('+Math.floor(Math.random()*30-15)+'deg');
+	img.css('z-index',z);
+    $(".m").append(img);
+    img.click(function(e){
+		z = z-1;
+		$(e.target.parentElement).css('z-index',z);
+    })
+  });
+  
+});
+});
+		</script>
+		<style>
+
+			.i{
+  border: 20px solid white;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+			.m{
+				position: relative;
+			}
+			h1{
+				font-family: 'Dancing Script', cursive;
+			}
+			.d{
+				position: absolute;
+			}
+			.t{
+				position: absolute; 
+				bottom: 5px;
+				right: 10px;
+				width: 100%;
+				margin: 0;
+				margin-right: 20px;
+				text-align: right;
+				color: grey;
+				font-family: 'Dancing Script', cursive;
+			}
+body{
+  background-color: lightblue;
+}
+img {outline:1px solid transparent;
+}
+
+
+		
+		</style>
+	</head>
+	<body id="content" class="sapUiBody">
+		<div>
+			<h1>
+				Danube Delta
+			</h1>
+		</div>
+  <div class="m"></div>
+	</body>
+</html>
