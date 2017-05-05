@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Casas Buendía</title>
+		
+		<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+<link href='https://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+		
+<script>
+    
+apikey="3e67a937942aa45ac19a80eb24399897";
+user="150379667@N08";
+    
+function show(nr) {
+	var p= photos[nr];
+    img = $("<div class='d'><img class='i' src='http://farm"+p.farm+".staticflickr.com/"+p.server+"/"+p.id+"_"+p.secret+"_z.jpg'><p class='t'>"+p.title+"</p></div>");
+    img.css('top',Math.floor(Math.random()*30+100)+"px");
+    img.css('left',Math.floor(Math.random()*30+100)+200+"px");
+	if (nr >0)
+    img.css('-webkit-transform','rotate('+Math.floor(Math.random()*30-15)+'deg');
+    $(".m").append(img);
+};
+
+function getAlbum(photoset) {
+    $(".t").remove();
+    $(".i").remove();
+	$.ajax({
+	  url: "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=" + apikey + "&photoset_id=" + photoset + "&user_id=" + user + "&per_page=100&format=json&nojsoncallback=1"
+	}).done(function(data) { 
+	  photos = data.photoset.photo;
+		curr=0;
+		show(curr);
+    });
+};
+    
+function getAlbums(){
+    $.ajax({
+	  url: "https://api.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=" + apikey + "&user_id=" + user + "&per_page=100&format=json&nojsoncallback=1"
+    }).done(function(data) { 
+        photosets=data.photosets.photoset;
+        menu = [];
+        photosets.forEach(function(p){
+           var m = $('<a class="menu"></a>');
+           var i = parseInt(p.title._content.split(" ")[0]);
+           var t = p.title._content.substring(p.title._content.indexOf(" ") + 1);
+           m.attr("href","javascript:getAlbum('"+p.id+"');");
+           if (i==1) initialid=p.id;
+           m.text(t);
+           menu[i]=m;
+        });
+        menu.forEach(function(m){ $(".m").append(m); })   
+        getAlbum(initialid);
+    });
+}
+            
+$(function() {
+    
+    getAlbums();
+    
+	$('.b').click(function() {
+		if (curr != null) {
+			curr=curr+1;
+			if (curr == photos.length) curr = 0;
+			show(curr);
+		}
+	})
+});
+		</script>
+		<style>
+			.i{
+                border: 20px solid white;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				 max-width: 640px;
+				 max-height: 640px;
+}
+			.m{
+				position: relative;
+			}
+			h1{
+				font-family: 'Dancing Script', cursive;
+			}
+			.d{
+				position: absolute;
+			}
+			.t{
+				position: absolute; 
+				bottom: 5px;
+				right: 10px;
+				width: 100%;
+				margin: 0;
+				margin-right: 20px;
+				text-align: right;
+				color: grey;
+				font-family: 'Dancing Script', cursive;
+			}
+            .menu{
+				font-family: 'Dancing Script', cursive;
+                font-size: 20px;
+                cursor:pointer;
+                display: block;
+                text-decoration: none;
+                color: black;
+				line-height: 35px;
+
+            }
+			.b{
+				position: absolute;
+				bottom: 100px;
+				right: 100px;
+				background-color: white;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				border-radius: 50px;
+				cursor: pointer;
+				font-size: 40px;
+				font-family: 'Dancing Script', cursive;
+				z-index: 1000;
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */				
+                border: 20px solid white;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+body{
+  background-color: lightblue;
+}
+img {outline:1px solid transparent;
+}
+		
+		</style>
+	</head>
+	<body id="content" class="sapUiBody">
+		<div>
+			<h1>
+				Casas Buendía - Vacation Rentals Costa Brava
+			</h1>
+		</div>
+  <div class="m"></div>
+  <div class="b">↷</div>
+	</body>
+</html>
