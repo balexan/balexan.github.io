@@ -2,15 +2,59 @@
 <head>
 </head>
 <style>
-#map {
-  height: 400px;
-  width: 100%;
- }
+
+html,
+body {
+  height: 100%;
+  margin: 0
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.box .row {
+  border: 1px dotted grey;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+  padding-left: 10px;
+}
+
+
+.box .row.content {
+  flex: 1 1 auto;
+}
+
+.box .row.footer {
+  flex: 0 1 40px;
+  padding-left: 10px;
+}    
+
+#map{
+height: 100%;
+width: 100%;
+}
+    
 </style>    
 <body>
-<h3>Smoking places near you</h3>
-  <p>Click on the map to add a new place.</p>
-<div id="map"></div>
+
+
+<div class="box">
+  <div class="row header">
+      <h3>Smoking places near you</h3>
+  </div>
+  <div id="map" class="row content">
+  </div>
+  <div class="row footer">
+      <p>Click on the map to add a new place.</p>
+  </div>
+</div>
+
 </body>
 
     
@@ -42,7 +86,6 @@
         addMarker(o);
     }
   });
-
   locRef.on("child_removed", function(data) {
     var key = data.getKey();
     locations.forEach(function(l) {
@@ -59,7 +102,6 @@
         position: {lat: loc.lat, lng: loc.lng},
         map: map
       });
-
       loc.marker = marker;
           
       google.maps.event.addListener(marker, 'click', function(m) {
@@ -91,12 +133,9 @@ function showPosition(position) {
     locations.forEach(function(loc) {
         addMarker(loc);
     })
-
-
     google.maps.event.addListener(map, 'click', function(event) {
         placeMarker(event.latLng);
     });
-
     function placeMarker(location) {
 /*
         var marker = new google.maps.Marker({
@@ -107,8 +146,6 @@ function showPosition(position) {
 locRef.push({lat: location.lat(), lng: location.lng()});
     }    
     
-
-
 }
 getLocation();</script>
     
