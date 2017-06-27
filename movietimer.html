@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+		
+		<title>Movie Music Timer</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>			
+		
+		
+		<script>
+			function setTimer(t, t1, text) {
+				setTimeout(function() {
+					console.log((t1-t)+': '+text);
+					$('#now').html( ((t1-t) / 1000) + ": " + text) ;
+				}, t);
+			};
+
+			
+			function setAllTimer(t0, t1, text, text2) {
+				var t=t0;
+				while (t < t1) {
+					setTimer(t,t1,"<h2>" + text + " </h2> then " + text2);
+					t = t+ 1000;
+				}
+			};
+			
+			function start() {
+				var lines = $('#ta').val().split('\n');
+				var times=[];
+				for (line of lines) {
+					l = line.split(" ");
+					timearr = l[0].split(":");
+					
+					t = {};
+					t.m = parseInt(timearr[0]);
+					t.s = parseInt(timearr[1]);
+					t.time = t.m*60 + t.s;
+					t.text = line.substr(line.indexOf(' ')+1);
+					times.push(t);
+				}
+				var now = Date.now();
+				for (var t=0;t<times.length-1;t++) {
+					setAllTimer(times[t].time*1000, times[t+1].time*1000, times[t].text, times[t+1].text);
+				}
+				
+			}
+		</script>
+		
+	</head>
+	<style>
+		#ta{
+			width: 200px;
+			height: 400px;
+			float:left;
+		}
+		#now{
+			width: 200px;
+			height: 200px;
+		}
+		#go{
+			width: 100px;
+			height: 50px;
+		}
+	</style>
+	<body id="content" class="sapUiBody">
+		<div id="now"></div>
+		<textarea id="ta">0:00 Intro
+0:20 Title
+0:30 Dialogue
+1:10 Fight
+1:20 Kiss
+1:30 End</textarea>
+		<button id="go" onclick="start();">START</button>
+		</button>
+	</body>
+</html>
