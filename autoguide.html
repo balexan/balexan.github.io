@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<meta charset="utf-8">
+
+		<title>Autobahn Audio Guide</title>
+
+		<script id='sap-ui-bootstrap'
+				src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
+				data-sap-ui-theme='sap_belize'
+				data-sap-ui-libs='sap.m'
+				data-sap-ui-xx-bindingSyntax='complex'></script>
+
+		<script id="myXml" type="text/xmldata">
+		<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="myController" displayBlock="true">
+		  <App>
+			 <Page title="Autobahn Audio Guide">
+       <headerContent>
+         <Button icon="sap-icon://stop" press="stop" />
+       </headerContent>
+				<Slider value="{/radius}" change="newRadius" max="10000" step="500" enableTickmarks="true"/>
+				<List items="{/places}">
+					<StandardListItem title="{title}" type="Active" press="play"/>
+				</List>
+			 </Page>
+		  </App>
+		</mvc:View>
+		</script>
+
+		<script>
+      pos={};
+      text="Welcome";
+			sap.ui.controller("myController", {
+				onInit: function() {
+					
+					var model = new sap.ui.model.json.JSONModel();
+					model.setData({radius: 2000});
+					this.getView().setModel(model);
+
+          navigator.geolocation.getCurrentPosition(this.newPos.bind(this));
+          setTimeout(this.newRadius.bind(this),500);
+					
+				},
+				newPos: function(position){
+          pos = position;
+				},
+        stop: function() {
+		      window.speechSynthesis.cancel();
+        },
+				newRadius: function() {
+					var radius = this.getView().getModel().getProperty('/radius');
+					$.ajax({
+						dataType: "json",
+						url: "https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius="+radius+"&gscoord="+pos.coords.latitude+"%7C"+pos.coords.longitude+"&format=json&callback=?"
+					}).done(function(data) {
+						this.getView().getModel().setProperty('/places',data.query.geosearch);
+					}.bind(this));
+				},
+        play: function(e){
+		      window.speechSynthesis.cancel();
+          var pageid = e.getSource().getBindingContext().getObject().pageid;
+					$.ajax({
+						dataType: "json",
+						url: "https://en.wikipedia.org/w/api.php?action=query&pageids="+pageid+"&prop=extracts&format=json&callback=?"
+					}).done(function(data) {
+            text=data.query.pages[pageid].extract;
+            text = $('<div>').html(text).text();
+//            var msg = new SpeechSynthesisUtterance(text);
+//			      window.speechSynthesis.speak(msg);
+             $('#trigger_me').trigger('click');
+					});
+        }
+				
+			});
+			sap.ui.view({ viewContent: jQuery('#myXml').html(), type:sap.ui.core.mvc.ViewType.XML }).placeAt("content");
+
+  function speech_text() {
+      var msg = new SpeechSynthesisUtterance(text);
+	   window.speechSynthesis.speak(msg);			
+     $('#trigger_me').fadeOut();
+   }
+
+var watchID = navigator.geolocation.watchPosition(function(position) {
+  pos = position;
+  newRadius();
+});      
+      
+		</script>
+
+	</head>
+	<body class='sapUiBody'>
+    <a id="trigger_me" onclick="speech_text()"><h3>Press to start</h3></a>
+    <div id='content'>
+	</body>
+</html>
