@@ -17,11 +17,11 @@
 		  <App>
 			 <Page title="Autobahn Audio Guide">
        <headerContent>
-         <Button icon="sap-icon://stop" press="stop" />
+         <Button icon="sap-icon://sound-off" press="stop" />
        </headerContent>
-				<Slider value="{/radius}" change="newRadius" max="10000" step="500" enableTickmarks="true"/>
+				<Slider value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
 				<List items="{/places}">
-					<StandardListItem title="{title}" type="Active" press="play"/>
+					<StandardListItem icon="sap-icon://sound-loud" title="{title}" type="Active" press="play"/>
 				</List>
 			 </Page>
 		  </App>
@@ -35,7 +35,7 @@
 				onInit: function() {
 					
 					var model = new sap.ui.model.json.JSONModel();
-					model.setData({radius: 2000});
+					model.setData({radius: 4000});
 					this.getView().setModel(model);
 
           navigator.geolocation.getCurrentPosition(this.newPos.bind(this));
