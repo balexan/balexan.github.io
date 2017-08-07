@@ -38,9 +38,17 @@
 					model.setData({radius: 4000});
 					this.getView().setModel(model);
 
-          navigator.geolocation.getCurrentPosition(this.newPos.bind(this));
-          setTimeout(this.newRadius.bind(this),500);
-					
+          navigator.geolocation.getCurrentPosition(function(position) {
+            this.newPos(position);
+            this.newRadius();
+          }.bind(this));
+
+          var watchID = navigator.geolocation.watchPosition(function(position) {
+            pos = position;
+            this.newRadius();
+          }.bind(this));      
+          
+          
 				},
 				newPos: function(position){
           pos = position;
@@ -81,10 +89,6 @@
      $('#trigger_me').fadeOut();
    }
 
-var watchID = navigator.geolocation.watchPosition(function(position) {
-  pos = position;
-  newRadius();
-});      
       
 		</script>
 
