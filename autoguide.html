@@ -16,10 +16,17 @@
 		<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="myController" displayBlock="true">
 		  <App>
 			 <Page title="Autobahn Audio Guide">
-       <headerContent>
-         <Button icon="sap-icon://sound-off" press="stop" />
-       </headerContent>
-				<Slider value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
+       <subHeader>
+         <Toolbar>
+             <Button icon="{= 'sap-icon://' + (${/playing} ? 'media-pause' : 'media-play') }" press="playpause" />
+             <Button icon="sap-icon://media-forward" press="next" />
+         </Toolbar>
+       </subHeader>
+       <footer>
+         <Toolbar>
+  			  	<Slider value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
+          </Toolbar>
+       </footer>
 				<List items="{/places}">
 					<StandardListItem icon="sap-icon://sound-loud" title="{title}" type="Active" press="play"/>
 				</List>
@@ -35,7 +42,7 @@
 				onInit: function() {
 					
 					var model = new sap.ui.model.json.JSONModel();
-					model.setData({radius: 4000});
+					model.setData({radius: 4000, playing: false});
 					this.getView().setModel(model);
 
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -53,8 +60,19 @@
 				newPos: function(position){
           pos = position;
 				},
-        stop: function() {
-		      window.speechSynthesis.cancel();
+        playpause: function() {
+          var playing = this.getView().getModel().getProperty('/playing');
+          var playingnow = this.getView().getModel().getProperty('/playingnow');
+          if (playingnow > -1) {
+            playing ? window.speechSynthesis.pause() : window.speechSynthesis.resume();
+          } else {
+            this.play(0);  
+          }
+          this.getView().getModel().setProperty('/playing',!playing);
+        },
+        next: function() {
+          var playingnow = this.getView().getModel().getProperty('/playingnow');
+          this.play(playingnow+1);
         },
 				newRadius: function() {
 					var radius = this.getView().getModel().getProperty('/radius');
@@ -67,7 +85,12 @@
 				},
         play: function(e){
 		      window.speechSynthesis.cancel();
-          var pageid = e.getSource().getBindingContext().getObject().pageid;
+          var playingnow=0;
+          playingnow = (typeof e === 'object') ? parseInt(e.getSource().getBindingContext().getPath().substr(8)) : e;
+          pageid = this.getView().getModel().getProperty("/places/"+playingnow).pageid;
+          this.getView().getModel().setProperty('/playing',true);
+          this.getView().getModel().setProperty('/playingnow',playingnow);
+          
 					$.ajax({
 						dataType: "json",
 						url: "https://en.wikipedia.org/w/api.php?action=query&pageids="+pageid+"&prop=extracts&format=json&callback=?"
@@ -86,15 +109,30 @@
   function speech_text() {
       var msg = new SpeechSynthesisUtterance(text);
 	   window.speechSynthesis.speak(msg);			
-     $('#trigger_me').fadeOut();
+     $('#start').fadeOut();
    }
 
       
 		</script>
 
+<style>
+  #start {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 500px;
+    height: 300px;
+    z-index: 5;
+    border: 2px solid black;
+    background-color: white;
+    padding: 20px;
+  }
+</style>
 	</head>
 	<body class='sapUiBody'>
-    <a id="trigger_me" onclick="speech_text()"><h3>Press to start</h3></a>
+    <div id="start">
+      <a id="trigger_me" onclick="speech_text()"><h3>Press to start</h3></a>
+    </div>
     <div id='content'>
 	</body>
 </html>
