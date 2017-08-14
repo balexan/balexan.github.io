@@ -6,12 +6,16 @@
 
 		<title>Autobahn Audio Guide</title>
 
+    
 		<script id='sap-ui-bootstrap'
 				src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
 				data-sap-ui-theme='sap_belize'
 				data-sap-ui-libs='sap.m'
 				data-sap-ui-xx-bindingSyntax='complex'></script>
 
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    
+    
 		<script id="myXml" type="text/xmldata">
 		<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="myController" displayBlock="true">
 		  <App>
@@ -24,6 +28,7 @@
        </subHeader>
        <footer>
          <Toolbar>
+            <Label text="Radius"/>
   			  	<Slider value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
           </Toolbar>
        </footer>
@@ -40,7 +45,6 @@
       text="Welcome";
 			sap.ui.controller("myController", {
 				onInit: function() {
-					
 					var model = new sap.ui.model.json.JSONModel();
 					model.setData({radius: 4000, playing: false});
 					this.getView().setModel(model);
@@ -64,7 +68,7 @@
           var playing = this.getView().getModel().getProperty('/playing');
           var playingnow = this.getView().getModel().getProperty('/playingnow');
           if (playingnow > -1) {
-            playing ? window.speechSynthesis.pause() : window.speechSynthesis.resume();
+            playing ? responsiveVoice.pause() : window.responsiveVoice.resume();
           } else {
             this.play(0);  
           }
@@ -97,21 +101,12 @@
 					}).done(function(data) {
             text=data.query.pages[pageid].extract;
             text = $('<div>').html(text).text();
-//            var msg = new SpeechSynthesisUtterance(text);
-//			      window.speechSynthesis.speak(msg);
-             $('#trigger_me').trigger('click');
+					   responsiveVoice.speak(text);
 					});
         }
 				
 			});
 			sap.ui.view({ viewContent: jQuery('#myXml').html(), type:sap.ui.core.mvc.ViewType.XML }).placeAt("content");
-
-  function speech_text() {
-      var msg = new SpeechSynthesisUtterance(text);
-	   window.speechSynthesis.speak(msg);			
-     $('#start').fadeOut();
-   }
-
       
 		</script>
 
@@ -130,9 +125,6 @@
 </style>
 	</head>
 	<body class='sapUiBody'>
-    <div id="start">
-      <a id="trigger_me" onclick="speech_text()"><h3>Press to start</h3></a>
-    </div>
     <div id='content'>
 	</body>
 </html>
