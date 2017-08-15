@@ -28,13 +28,13 @@
        </subHeader>
        <footer>
          <Toolbar>
-            <Label text="Radius [m]">
+            <Label text="Radius [km]">
               <layoutData>
               <ToolbarLayoutData shrinkable="false" />
               </layoutData>
             </Label>      
             <ToolbarSpacer/>
-  			  	<Slider width="100%" value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
+  			  	<Slider width="100%" value="{/radius}" change="newRadius" min="1" max="20" enableTickmarks="true"/>
           </Toolbar>
        </footer>
 				<List items="{/places}">
@@ -51,7 +51,7 @@
 			sap.ui.controller("myController", {
 				onInit: function() {
 					var model = new sap.ui.model.json.JSONModel();
-					model.setData({radius: 4000, playing: false});
+					model.setData({radius: 6, playing: false});
 					this.getView().setModel(model);
 
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -84,7 +84,7 @@
           this.play(playingnow+1);
         },
 				newRadius: function() {
-					var radius = this.getView().getModel().getProperty('/radius');
+					var radius = this.getView().getModel().getProperty('/radius')*1000;
 					$.ajax({
 						dataType: "json",
 						url: "https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius="+radius+"&gscoord="+pos.coords.latitude+"%7C"+pos.coords.longitude+"&format=json&callback=?"
