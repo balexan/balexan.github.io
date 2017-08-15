@@ -39,7 +39,7 @@
           </Toolbar>
        </footer>
 				<List noDataText="No locations found. Try increasing the radius." items="{/places}">
-					<StandardListItem icon="sap-icon://sound-loud" title="{title}" type="Active" press="play"/>
+					<StandardListItem icon="sap-icon://sound-loud" title="{title}" info="{path:'dist', formatter:'distform'}" type="Active" press="play"/>
 				</List>
 			 </Page>
 		  </App>
@@ -116,6 +116,11 @@
       function start(){
          responsiveVoice.speak("Welcome");	
          $('#start').fadeOut()
+      }
+      function distform(dist){
+        d = parseInt(dist);
+        if (d<1000) return dist+" m";
+        else return (Math.floor(d/100)/10 + " km");
       }
 		</script>
 
