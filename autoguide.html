@@ -28,8 +28,13 @@
        </subHeader>
        <footer>
          <Toolbar>
-            <Label text="Radius"/>
-  			  	<Slider value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
+            <Label text="Radius [m]">
+              <layoutData>
+              <ToolbarLayoutData shrinkable="false" />
+              </layoutData>
+            </Label>      
+            <ToolbarSpacer/>
+  			  	<Slider width="100%" value="{/radius}" change="newRadius" max="10000" step="1000" enableTickmarks="true"/>
           </Toolbar>
        </footer>
 				<List items="{/places}">
