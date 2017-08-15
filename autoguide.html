@@ -20,12 +20,13 @@
 		<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="myController" displayBlock="true">
 		  <App>
 			 <Page title="Autobahn Audio Guide">
-       <subHeader>
+       <headerContent>
          <Toolbar>
              <Button icon="{= 'sap-icon://' + (${/playing} ? 'media-pause' : 'media-play') }" press="playpause" />
+            <ToolbarSpacer/>
              <Button icon="sap-icon://media-forward" press="next" />
          </Toolbar>
-       </subHeader>
+       </headerContent>
        <footer>
          <Toolbar>
             <Label text="Radius [km]">
