@@ -119,7 +119,7 @@
       }
       function distform(dist){
         d = parseInt(dist);
-        if (d<1000) return dist+" m";
+        if (d<1000) return Math.floor(d) +" m";
         else return (Math.floor(d/100)/10 + " km");
       }
 		</script>
