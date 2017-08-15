@@ -87,7 +87,7 @@
 					var radius = this.getView().getModel().getProperty('/radius')*1000;
 					$.ajax({
 						dataType: "json",
-						url: "https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius="+radius+"&gscoord="+pos.coords.latitude+"%7C"+pos.coords.longitude+"&format=json&callback=?"
+						url: "https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gslimit=100&gsradius="+radius+"&gscoord="+pos.coords.latitude+"%7C"+pos.coords.longitude+"&format=json&callback=?"
 					}).done(function(data) {
 						this.getView().getModel().setProperty('/places',data.query.geosearch);
 					}.bind(this));
