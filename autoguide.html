@@ -37,7 +37,7 @@
   			  	<Slider width="100%" value="{/radius}" change="newRadius" min="1" max="10" enableTickmarks="true"/>
           </Toolbar>
        </footer>
-				<List items="{/places}">
+				<List noDataText="No locations found. Try increasing the radius." items="{/places}">
 					<StandardListItem icon="sap-icon://sound-loud" title="{title}" type="Active" press="play"/>
 				</List>
 			 </Page>
