@@ -42,8 +42,8 @@
               
     ]
     for (i=0;i<24;i++){
-        $("body").append($('<div class="door'+((new Date().getDate() >=rand[i]) ? " point":"") + '" id="d'+rand[i]+'" style="background-image: url(\'apc_xmasdays_'+rand[i]+'.jpg\')">'+
-//        $("body").append($('<div class="door point" id="d'+rand[i]+'" style="background-image: url(\'apc_xmasdays_'+rand[i]+'.jpg\')">'+      
+//        $("body").append($('<div class="door'+((new Date().getDate() >=rand[i]) ? " point":"") + '" id="d'+rand[i]+'" style="background-image: url(\'apc_xmasdays_'+rand[i]+'.jpg\')">'+
+        $("body").append($('<div class="door point" id="d'+rand[i]+'" style="background-image: url(\'apc_xmasdays_'+rand[i]+'.jpg\')">'+      
         '</div>'));
     }
     $(".point").click(function(evt){
