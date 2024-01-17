@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .white {
+            width: 60px;
+            height: 200px;
+            float: left;
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            background-color: #ffffff;
+        }
+        .black {
+            width: 40px;
+            height: 130px;
+            float: left;
+            position: relative;
+            margin-left: -20px;
+            margin-right: -20px;
+            z-index: 1;
+            background-color: #000000;
+        }
+        .active {
+            background-color: #FFD700;
+        }
+        #not { font-size: 80px }
+        #piano {
+            width: 490px;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="note">C</h2>
+    <div id="piano">
+        <div class="white" id="C"></div>
+        <div class="black" id="C#_Db"></div>
+        <div class="white" id="D"></div>
+        <div class="black" id="D#_Eb"></div>
+        <div class="white" id="E"></div>
+        <div class="white" id="F"></div>
+        <div class="black" id="F#_Gb"></div>
+        <div class="white" id="G"></div>
+        <div class="black" id="G#_Ab"></div>
+        <div class="white" id="A"></div>
+        <div class="black" id="A#_Bb"></div>
+        <div class="white" id="B"></div>
+    </div>
+    <script>
+        var notes = ["C", ["C#", "Db"], "D", ["D#", "Eb"], "E", "F", ["F#", "Gb"], "G", ["G#", "Ab"], "A", ["A#", "Bb"], "B"];
+        
+        var noteDisplay = document.getElementById('note');
+        var randomNote = notes[Math.floor(Math.random() * notes.length)];
+        noteDisplay.innerText = Array.isArray(randomNote) ? randomNote[Math.floor(Math.random() * randomNote.length)] : randomNote;
+
+        var keys = document.querySelectorAll('.white, .black');
+        keys.forEach(function(key) {
+            key.addEventListener("click", function(e) {
+                if(e.target.id.includes(noteDisplay.innerText)) {
+                    e.target.classList.add('active');
+                    setTimeout(function() {
+                        var randomNote = notes[Math.floor(Math.random() * notes.length)];
+                        noteDisplay.innerText = Array.isArray(randomNote) ? randomNote[Math.floor(Math.random() * randomNote.length)] : randomNote;
+                        e.target.classList.remove('active');
+                    }, 1000);
+                } else {
+                    alert('Try again');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
